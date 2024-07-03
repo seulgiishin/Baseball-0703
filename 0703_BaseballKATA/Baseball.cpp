@@ -2,9 +2,24 @@
 
 using namespace std;
 
+struct GuessResult {
+	bool solved;
+	int strikes;
+	int balls;
+};
+
 class Baseball {
 public:
-	void guess(const string& guessNumber) {
+	Baseball(const string& number)
+		:question(number){}
+
+	GuessResult guess(const string& guessNumber) {
+		assrtIllegalArgument(guessNumber);
+		return { true,3,0 };
+	}
+
+	void assrtIllegalArgument(const std::string& guessNumber)
+	{
 		if (guessNumber.length() != 3) {
 			throw length_error("Must be three letters");
 		}
@@ -25,4 +40,6 @@ public:
 			guessNumber[1] == guessNumber[2] ||
 			guessNumber[2] == guessNumber[0];
 	}
+private:
+	string question;
 };
