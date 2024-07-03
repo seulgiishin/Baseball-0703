@@ -47,3 +47,18 @@ TEST_F(BaseballFixture, ReturnSolveResult1S2B) {
 	EXPECT_EQ(2, result.balls);
 }
 
+TEST_F(BaseballFixture, ReturnSolveResult0S0B) {
+	GuessResult result = game.guess("789");
+	EXPECT_TRUE(result.solved == false);
+	EXPECT_EQ(0, result.strikes);
+	EXPECT_EQ(0, result.balls);
+}
+
+TEST_F(BaseballFixture, ReturnSolveResult0S3B) {
+	GuessResult result = game.guess("312");
+	EXPECT_TRUE(result.solved == false);
+	EXPECT_EQ(0, result.strikes);
+	EXPECT_EQ(3, result.balls);
+}
+
+

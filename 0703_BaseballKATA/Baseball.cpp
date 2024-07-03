@@ -18,30 +18,37 @@ public:
 		if (guessNumber == question) {
 			return { true,3,0 };
 		}
-		int ballCount = 0;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if (i == j) continue;
-				if (guessNumber[i] == question[j])
-					ballCount++;
-			}
-		}
-		return { false, getStrikeCount(guessNumber) ,ballCount };
+		
+		return { false, getStrikeCount(guessNumber) ,getBallCount(guessNumber)};
 	}
 
 	int getStrikeCount(const std::string& guessNumber)
 	{
 		int strikeCount = 0;
-		for (int index = 0; index < 3; index++) {
+		for (int index = 0; index < QUESTION_LENGTH; index++) {
 			if (question[index] == guessNumber[index])
 				strikeCount++;
 		}
 		return strikeCount;
 	}
 
+	int getBallCount(const std::string& guessNumber)
+	{
+		int ballCount = 0;
+		for (int guessIndex = 0; guessIndex < QUESTION_LENGTH; guessIndex++) {
+			for (int questionIndex = 0; questionIndex < QUESTION_LENGTH; questionIndex++) {
+				if (guessIndex == questionIndex) continue;
+				if (guessNumber[guessIndex] == question[questionIndex])
+					ballCount++;
+			}
+		}
+		return ballCount;
+	}
+
+
 	void assrtIllegalArgument(const std::string& guessNumber)
 	{
-		if (guessNumber.length() != 3) {
+		if (guessNumber.length() != QUESTION_LENGTH) {
 			throw length_error("Must be three letters");
 		}
 
@@ -63,4 +70,5 @@ public:
 	}
 private:
 	string question;
+	const int QUESTION_LENGTH = 3;
 };
