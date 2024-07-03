@@ -11,15 +11,22 @@ struct GuessResult {
 class Baseball {
 public:
 	Baseball(const string& number)
-		:question(number){}
+		:question(number) {}
 
 	GuessResult guess(const string& guessNumber) {
 		assrtIllegalArgument(guessNumber);
 		if (guessNumber == question) {
 			return { true,3,0 };
 		}
-		
-		return { false, getStrikeCount(guessNumber) ,0 };
+		int ballCount = 0;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (i == j) continue;
+				if (guessNumber[i] == question[j])
+					ballCount++;
+			}
+		}
+		return { false, getStrikeCount(guessNumber) ,ballCount };
 	}
 
 	int getStrikeCount(const std::string& guessNumber)
